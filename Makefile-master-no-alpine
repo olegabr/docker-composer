@@ -1,0 +1,17 @@
+build: build-master
+
+test: build test-master
+
+build-base:
+	docker build -t composer/composer:base base
+	docker build -t composer/composer:base-php5 base/php5
+ 
+build-master: build-base
+	docker build -t composer/composer:master master
+	docker build -t composer/composer:master-php5 master/php5
+
+test-master:
+	@echo -n "master\t\t\t"
+	@docker run composer/composer:master --version --no-ansi
+	@docker run composer/composer:master-php5 --version --no-ansi
+
